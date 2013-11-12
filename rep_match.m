@@ -11,7 +11,7 @@ function matched = rep_match( to_be_matched , match_against )
 %
 %   Example:
 %       to_be_matched   = sin( -pi : pi / 20 : pi )                     ; 
-%       match_against   = randn( numel( to_be_matched ) )               ; 
+%       match_against   = randn( numel( to_be_matched ) , 5 )        	; 
 %       matched         = rep_match( to_be_matched , match_against )    ; 
 %
 %       size_of_matched = size( matched ) 
@@ -21,7 +21,7 @@ function matched = rep_match( to_be_matched , match_against )
 
 sz_against      = size( match_against )         ;
 sz_tbm          = size( to_be_matched )         ;
-non_match       = not( sz_against == sz_tbm )   ;
+match           = sz_against == sz_tbm          ;
 transp_against  = size( match_against' )        ;
 transp_tbm      = size( to_be_matched' )        ;
 
@@ -33,7 +33,7 @@ dimensions                  = ones( size( sz_against )  )               ;
 dimensions( non_match )     = sz_against( non_match )                   ;
 matched                     = repmat( to_be_matched , dimensions )      ;
 
-if all( dimensions == 1 )
+if all( non_match )
     disp( 'No match could be found, original vector returned.' )
     if any( transp_tbm == sz_against )
         disp( 'Transposed source vector could produce a viable result.' )
